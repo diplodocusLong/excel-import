@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    #driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:p6spy:mysql://10.38.77.61:3306/ygyg_smartenergy?useunicode=true&characterEncoding=utf8
+    username: ygyg_smartenergy_beta2
+    password: ygyg_smartenergy_beta2
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+
+mybatis:
+  type-aliases-package: com.lianglong.excelimport.entity
+  mapper-locations: classpath:mapper/*Dao.xml
+
+

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglong.excelimport.dao.InfomodelPropertyDao">
+
+    <resultMap type="com.lianglong.excelimport.entity.InfomodelProperty" id="InfomodelPropertyMap">
+        <result property="modelPropertyId" column="model_property_id" jdbcType="INTEGER"/>
+        <result property="modelId" column="model_id" jdbcType="INTEGER"/>
+        <result property="seq" column="seq" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
+        <result property="unitMark" column="unit_mark" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="dataType" column="data_type" jdbcType="INTEGER"/>
+        <result property="computeFrequency" column="compute_frequency" jdbcType="VARCHAR"/>
+        <result property="computeMethod" column="compute_method" jdbcType="VARCHAR"/>
+        <result property="computeObjectRange" column="compute_object_range" jdbcType="VARCHAR"/>
+        <result property="computeTimeRange" column="compute_time_range" jdbcType="VARCHAR"/>
+        <result property="storeRule" column="store_rule" jdbcType="VARCHAR"/>
+        <result property="readWriteType" column="read_write_type" jdbcType="INTEGER"/>
+        <result property="digitalAnalogType" column="digital_analog_type" jdbcType="INTEGER"/>
+        <result property="computeRelationCode" column="compute_relation_code" jdbcType="VARCHAR"/>
+        <result property="computeDescription" column="compute_description" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="storeDescription" column="store_description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="InfomodelPropertyMap">
+        select
+          model_property_id, model_id, seq, name, short_name, code, unit_name, unit_mark, type, data_type, compute_frequency, compute_method, compute_object_range, compute_time_range, store_rule, read_write_type, digital_analog_type, compute_relation_code, compute_description, description, store_description
+        from ygyg_smartenergy.infomodel_property
+        where model_property_id = #{modelPropertyId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="InfomodelPropertyMap">
+        select
+          model_property_id, model_id, seq, name, short_name, code, unit_name, unit_mark, type, data_type, compute_frequency, compute_method, compute_object_range, compute_time_range, store_rule, read_write_type, digital_analog_type, compute_relation_code, compute_description, description, store_description
+        from ygyg_smartenergy.infomodel_property
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="InfomodelPropertyMap">
+        select
+        model_property_id, model_id, seq, name, short_name, code, unit_name, unit_mark, type, data_type,
+        compute_frequency, compute_method, compute_object_range, compute_time_range, store_rule, read_write_type,
+        digital_analog_type, compute_relation_code, compute_description, description, store_description
+        from ygyg_smartenergy.infomodel_property
+        <where>
+            <if test="modelPropertyId != null">
+                and model_property_id = #{modelPropertyId}
+            </if>
+            <if test="modelId != null">
+                and model_id = #{modelId}
+            </if>
+            <if test="seq != null">
+                and seq = #{seq}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="shortName != null and shortName != ''">
+                and short_name = #{shortName}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="unitName != null and unitName != ''">
+                and unit_name = #{unitName}
+            </if>
+            <if test="unitMark != null and unitMark != ''">
+                and unit_mark = #{unitMark}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="dataType != null">
+                and data_type = #{dataType}
+            </if>
+            <if test="computeFrequency != null and computeFrequency != ''">
+                and compute_frequency = #{computeFrequency}
+            </if>
+            <if test="computeMethod != null and computeMethod != ''">
+                and compute_method = #{computeMethod}
+            </if>
+            <if test="computeObjectRange != null and computeObjectRange != ''">
+                and compute_object_range = #{computeObjectRange}
+            </if>
+            <if test="computeTimeRange != null and computeTimeRange != ''">
+                and compute_time_range = #{computeTimeRange}
+            </if>
+            <if test="storeRule != null and storeRule != ''">
+                and store_rule = #{storeRule}
+            </if>
+            <if test="readWriteType != null">
+                and read_write_type = #{readWriteType}
+            </if>
+            <if test="digitalAnalogType != null">
+                and digital_analog_type = #{digitalAnalogType}
+            </if>
+            <if test="computeRelationCode != null and computeRelationCode != ''">
+                and compute_relation_code = #{computeRelationCode}
+            </if>
+            <if test="computeDescription != null and computeDescription != ''">
+                and compute_description = #{computeDescription}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="storeDescription != null and storeDescription != ''">
+                and store_description = #{storeDescription}
+            </if>
+        </where>
+    </select>
+    <select id="queryToMap" resultType="java.util.Map">
+            SELECT
+	        t.short_name shortName,
+	        MAX(m.model_property_id) base,
+	        t.model_id modelId
+            FROM
+	            infomodel t
+	        left JOIN infomodel_property m ON t.model_id = m.model_id
+            GROUP BY
+	            t.model_id;
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="modelPropertyId" useGeneratedKeys="true">
+        insert into ygyg_smartenergy.infomodel_property(model_property_id,model_id, seq, name, short_name, code, unit_name, unit_mark, type, data_type, compute_frequency, compute_method, compute_object_range, compute_time_range, store_rule, read_write_type, digital_analog_type, compute_relation_code, compute_description, description, store_description)
+        values (#{modelProperyId},#{modelId}, #{seq}, #{name}, #{shortName}, #{code}, #{unitName}, #{unitMark}, #{type}, #{dataType}, #{computeFrequency}, #{computeMethod}, #{computeObjectRange}, #{computeTimeRange}, #{storeRule}, #{readWriteType}, #{digitalAnalogType}, #{computeRelationCode}, #{computeDescription}, #{description}, #{storeDescription})
+    </insert>
+    <insert id="saveBatch">
+
+        insert into ygyg_smartenergy.infomodel_property(model_property_id,model_id, seq, name, short_name, code,
+        unit_name, unit_mark,
+        type, data_type, compute_frequency, compute_method, compute_object_range, compute_time_range, store_rule,
+        read_write_type,
+        digital_analog_type, compute_relation_code, compute_description, description, store_description)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.modelPropertyId},#{item.modelId}, #{item.seq}, #{item.name}, #{item.shortName}, #{item.code},
+            #{item.unitName}, #{item.unitMark}, #{item.type}, #{item.dataType},
+            #{item.computeFrequency}, #{item.computeMethod}, #{item.computeObjectRange}, #{item.computeTimeRange},
+            #{item.storeRule}, #{item.readWriteType},
+            #{item.digitalAnalogType}, #{item.computeRelationCode}, #{item.computeDescription}, #{item.description},
+            #{item.storeDescription})
+        </foreach>
+
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ygyg_smartenergy.infomodel_property
+        <set>
+            <if test="modelId != null">
+                model_id = #{modelId},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="shortName != null and shortName != ''">
+                short_name = #{shortName},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="unitName != null and unitName != ''">
+                unit_name = #{unitName},
+            </if>
+            <if test="unitMark != null and unitMark != ''">
+                unit_mark = #{unitMark},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType},
+            </if>
+            <if test="computeFrequency != null and computeFrequency != ''">
+                compute_frequency = #{computeFrequency},
+            </if>
+            <if test="computeMethod != null and computeMethod != ''">
+                compute_method = #{computeMethod},
+            </if>
+            <if test="computeObjectRange != null and computeObjectRange != ''">
+                compute_object_range = #{computeObjectRange},
+            </if>
+            <if test="computeTimeRange != null and computeTimeRange != ''">
+                compute_time_range = #{computeTimeRange},
+            </if>
+            <if test="storeRule != null and storeRule != ''">
+                store_rule = #{storeRule},
+            </if>
+            <if test="readWriteType != null">
+                read_write_type = #{readWriteType},
+            </if>
+            <if test="digitalAnalogType != null">
+                digital_analog_type = #{digitalAnalogType},
+            </if>
+            <if test="computeRelationCode != null and computeRelationCode != ''">
+                compute_relation_code = #{computeRelationCode},
+            </if>
+            <if test="computeDescription != null and computeDescription != ''">
+                compute_description = #{computeDescription},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="storeDescription != null and storeDescription != ''">
+                store_description = #{storeDescription},
+            </if>
+        </set>
+        where model_property_id = #{modelPropertyId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ygyg_smartenergy.infomodel_property where model_property_id = #{modelPropertyId}
+    </delete>
+
+</mapper>

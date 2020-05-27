@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglong.excelimport.dao.InfoobjectHistoryDao">
+
+    <resultMap type="com.lianglong.excelimport.entity.InfoobjectHistory" id="InfoobjectHistoryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="objectId" column="object_id" jdbcType="INTEGER"/>
+        <result property="relationObjectId" column="relation_object_id" jdbcType="VARCHAR"/>
+        <result property="propertyId" column="property_id" jdbcType="INTEGER"/>
+        <result property="propertyName" column="property_name" jdbcType="VARCHAR"/>
+        <result property="propertyCode" column="property_code" jdbcType="VARCHAR"/>
+        <result property="propertyType" column="property_type" jdbcType="INTEGER"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="storeRule" column="store_rule" jdbcType="VARCHAR"/>
+        <result property="deviceTime" column="device_time" jdbcType="TIMESTAMP"/>
+        <result property="uploadedTime" column="uploaded_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="groupTime" column="group_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="InfoobjectHistoryMap">
+        select
+          id, object_id, relation_object_id, property_id, property_name, property_code, property_type, value, store_rule, device_time, uploaded_time, create_time, group_time
+        from ygyg_smartenergy.infoobject_history
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="InfoobjectHistoryMap">
+        select
+          id, object_id, relation_object_id, property_id, property_name, property_code, property_type, value, store_rule, device_time, uploaded_time, create_time, group_time
+        from ygyg_smartenergy.infoobject_history
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="InfoobjectHistoryMap">
+        select
+          id, object_id, relation_object_id, property_id, property_name, property_code, property_type, value, store_rule, device_time, uploaded_time, create_time, group_time
+        from ygyg_smartenergy.infoobject_history
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="objectId != null">
+                and object_id = #{objectId}
+            </if>
+            <if test="relationObjectId != null and relationObjectId != ''">
+                and relation_object_id = #{relationObjectId}
+            </if>
+            <if test="propertyId != null">
+                and property_id = #{propertyId}
+            </if>
+            <if test="propertyName != null and propertyName != ''">
+                and property_name = #{propertyName}
+            </if>
+            <if test="propertyCode != null and propertyCode != ''">
+                and property_code = #{propertyCode}
+            </if>
+            <if test="propertyType != null">
+                and property_type = #{propertyType}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="storeRule != null and storeRule != ''">
+                and store_rule = #{storeRule}
+            </if>
+            <if test="deviceTime != null">
+                and device_time = #{deviceTime}
+            </if>
+            <if test="uploadedTime != null">
+                and uploaded_time = #{uploadedTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="groupTime != null and groupTime != ''">
+                and group_time = #{groupTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ygyg_smartenergy.infoobject_history(object_id, relation_object_id, property_id, property_name, property_code, property_type, value, store_rule, device_time, uploaded_time, create_time, group_time)
+        values (#{objectId}, #{relationObjectId}, #{propertyId}, #{propertyName}, #{propertyCode}, #{propertyType}, #{value}, #{storeRule}, #{deviceTime}, #{uploadedTime}, #{createTime}, #{groupTime})
+    </insert>
+    <insert id="insertBatch">
+
+        insert into ygyg_smartenergy.infoobject_history(object_id, relation_object_id, property_id, property_name, property_code, property_type, value, store_rule, device_time, uploaded_time, create_time, group_time)
+
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.objectId}, #{item.relationObjectId}, #{item.propertyId}, #{item.propertyName}, #{item.propertyCode}, #{item.propertyType}, #{item.value}, #{item.storeRule}, #{item.deviceTime}, #{item.uploadedTime}, #{item.createTime}, #{item.groupTime})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ygyg_smartenergy.infoobject_history
+        <set>
+            <if test="objectId != null">
+                object_id = #{objectId},
+            </if>
+            <if test="relationObjectId != null and relationObjectId != ''">
+                relation_object_id = #{relationObjectId},
+            </if>
+            <if test="propertyId != null">
+                property_id = #{propertyId},
+            </if>
+            <if test="propertyName != null and propertyName != ''">
+                property_name = #{propertyName},
+            </if>
+            <if test="propertyCode != null and propertyCode != ''">
+                property_code = #{propertyCode},
+            </if>
+            <if test="propertyType != null">
+                property_type = #{propertyType},
+            </if>
+            <if test="value != null and value != ''">
+                value = #{value},
+            </if>
+            <if test="storeRule != null and storeRule != ''">
+                store_rule = #{storeRule},
+            </if>
+            <if test="deviceTime != null">
+                device_time = #{deviceTime},
+            </if>
+            <if test="uploadedTime != null">
+                uploaded_time = #{uploadedTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="groupTime != null and groupTime != ''">
+                group_time = #{groupTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ygyg_smartenergy.infoobject_history where id = #{id}
+    </delete>
+
+</mapper>
