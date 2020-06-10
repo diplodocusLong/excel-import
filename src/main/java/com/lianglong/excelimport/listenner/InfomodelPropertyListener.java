@@ -130,8 +130,6 @@ public class InfomodelPropertyListener extends AnalysisEventListener<Map<Integer
 
            if(data.get(5).contains(entry.getKey())){
 
-
-
                infomodelProperty.setComputeMethod(entry.getValue());
 
                break;

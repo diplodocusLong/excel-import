@@ -46,7 +46,7 @@ class ExcelImportApplicationTests {
     static Map<String, Long> map = new HashMap<>();
 
     /**
-     * 有信息模型目录
+     * 有信息模型目录 使用此方法
      */
     @Test
     public void test() {
@@ -82,7 +82,7 @@ class ExcelImportApplicationTests {
     }
 
     /**
-     * 无信息模型目录
+     * 无信息模型目录 使用此方法
      */
     @Test
     public void hell(){
@@ -121,18 +121,11 @@ class ExcelImportApplicationTests {
                 InfoobjectHistory.of().setDeviceTime(date)
                         .setObjectId(460145857262653440L);
 
-
-
-
             }
-
-
 
         }
 
-
        int row  = infoobjectHistoryDao.insertBatch(infoobjectHistories);
-
 
 
     }
